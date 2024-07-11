@@ -58,10 +58,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "software-life-ui:build:production"
+              "buildTarget": "software-life-ui:build:production"
             },
             "development": {
-              "browserTarget": "software-life-ui:build:development"
+              "buildTarget": "software-life-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "software-life-ui:build"
+            "buildTarget": "software-life-ui:build"
           }
         },
         "test": {
