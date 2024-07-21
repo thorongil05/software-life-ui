@@ -1,6 +1,6 @@
 <h1>Acceptance Criteria</h1>
-<div class="example-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource">
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" multiTemplateDataRows>
     <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
@@ -21,7 +21,56 @@
       <mat-cell *matCellDef="let element"> {{ element.version }} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    <ng-container matColumnDef="expand">
+      <mat-header-cell *matHeaderCellDef aria-label="row actions"
+        >&nbsp;</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          aria-label="expand row"
+          (click)="expandRow(row); $event.stopPropagation()"
+        >
+          <div *ngIf="expandedRow !== row">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+          <div *ngIf="expandedRow === row">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          </div>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell
+        *matCellDef="let row"
+        [attr.colspan]="columnsToDisplayWithExpand.length"
+      >
+        <div
+          class="row-detail"
+          [@detailExpand]="row == expandedRow ? 'expanded' : 'collapsed'"
+        >
+          <app-acceptance-criteria-row-detail
+            [acceptanceCriteriaRow]="row"
+          ></app-acceptance-criteria-row-detail>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+      *matHeaderRowDef="columnsToDisplayWithExpand"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: columnsToDisplayWithExpand"
+      class="master-row"
+      [class.expanded-row]="row === expandedRow"
+      (click)="expandRow(row)"
+      onkeypress="expandRow(row)"
+    ></mat-row>
+    <mat-row
+      class="detail-row"
+      *matRowDef="let row; columns: ['expandedDetail']"
+    ></mat-row>
   </mat-table>
 </div>
