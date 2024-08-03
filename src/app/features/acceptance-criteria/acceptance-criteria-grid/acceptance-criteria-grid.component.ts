@@ -30,16 +30,20 @@ export class AcceptanceCriteriaGridComponent {
   displayedColumns = ['name', 'status', 'version'];
   dataSource: AcceptanceCriteriaGridEntry[] = [
     {
-      name: 'Acceptance Criteria 1',
+      name: 'Row Detail',
       status: AcceptanceCriteriaStatus.APPROVED,
       version: '0.0.1',
-      content: 'Test',
+      preCondition: 'the table with all the acceptance criteria',
+      action: 'a user click on a row',
+      result: 'the system shows the detail',
     },
     {
-      name: 'Acceptance Criteria 2',
+      name: 'Acceptance Criteria Modal',
       status: AcceptanceCriteriaStatus.APPROVED,
       version: '0.0.1',
-      content: 'test',
+      preCondition: 'the detail row opened',
+      action: 'a user click on update button',
+      result: 'the system opens a modal to update the criteria',
     },
   ];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];

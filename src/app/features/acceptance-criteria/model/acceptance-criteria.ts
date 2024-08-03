@@ -2,7 +2,9 @@ export interface AcceptanceCriteriaGridEntry {
   name: string;
   status: AcceptanceCriteriaStatus;
   version: string;
-  content: string;
+  preCondition: string;
+  action: string;
+  result: string;
 }
 
 export enum AcceptanceCriteriaStatus {
